@@ -18,10 +18,6 @@ const Crops = () => {
   const { toast } = useToast();
   const { addToCart, getTotalItems } = useCart();
 
-  useEffect(() => {
-    refreshProducts();
-  }, [refreshProducts]);
-
   const filteredProducts = cropProducts.filter(
     product => 
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

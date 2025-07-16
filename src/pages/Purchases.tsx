@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -19,10 +18,10 @@ const Purchases = () => {
   const [deletingRequestId, setDeletingRequestId] = useState<string | null>(null);
   const [deleteDialogOpenId, setDeleteDialogOpenId] = useState<string | null>(null);
 
-  // Always fetch user purchase requests on mount or when user changes
+  // Always fetch user purchase requests on mount
   useEffect(() => {
     refreshRequests();
-  }, [refreshRequests, user]);
+  }, []);
 
   // Get user's purchase requests
   const userRequests = getUserRequests();
@@ -96,6 +95,8 @@ const Purchases = () => {
     doc.text(`Name: ${request.farmer_profile?.full_name || "N/A"}`, 20, yPosition);
     yPosition += lineHeight;
     doc.text(`Email: ${request.farmer_profile?.email || "N/A"}`, 20, yPosition);
+    yPosition += lineHeight;
+    doc.text(`Address: ${request.farmer_profile?.address || "N/A"}`, 20, yPosition);
     yPosition += lineHeight * 2;
     
     // Items
@@ -268,6 +269,7 @@ const Purchases = () => {
                                     <h4 className="font-bold">FARMER DETAILS:</h4>
                                     <p>Name: {request.farmer_profile?.full_name || "N/A"}</p>
                                     <p>Email: {request.farmer_profile?.email || "N/A"}</p>
+                                    <p>Address: {request.farmer_profile?.address || "N/A"}</p>
                                   </div>
                                   
                                   <div className="space-y-2">

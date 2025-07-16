@@ -187,6 +187,8 @@ const FarmerDashboard = () => {
     switch (status) {
       case 'accepted':
         return <CheckCircle className="w-4 h-4 text-green-600" />;
+        case 'paid':
+        return <CheckCircle className="w-4 h-4 text-green-600" />;
       case 'rejected':
         return <XCircle className="w-4 h-4 text-red-600" />;
       default:
@@ -197,6 +199,8 @@ const FarmerDashboard = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'accepted':
+        return 'text-green-600 bg-green-50';
+      case 'paid':
         return 'text-green-600 bg-green-50';
       case 'rejected':
         return 'text-red-600 bg-red-50';
@@ -250,15 +254,18 @@ const FarmerDashboard = () => {
     const [uploadError, setUploadError] = useState<string | null>(null);
     const [category, setCategory] = useState<string>("");
     const [imageUrl, setImageUrl] = useState<string>("");
+    const [submitting, setSubmitting] = useState(false);
 
     const handleProductSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
+      setSubmitting(true);
       if (!user) {
         toast({
           title: "Authentication Required",
           description: "You must be logged in to add products.",
           variant: "destructive",
         });
+        setSubmitting(false);
         return;
       }
       try {
@@ -290,12 +297,14 @@ const FarmerDashboard = () => {
         setSelectedFileName(null);
         if (durationRef.current) durationRef.current.value = "";
         setIncludedList([]);
+        setSubmitting(false);
       } catch (error) {
         toast({
           title: "Error",
           description: "Failed to add product. Please try again.",
           variant: "destructive",
         });
+        setSubmitting(false);
     }
   };
 
@@ -485,8 +494,8 @@ const FarmerDashboard = () => {
             </div>
           </div>
           
-          <Button type="submit" className="w-full bg-agro-green hover:bg-agro-green-dark" disabled={uploading}>
-            Add {type}
+          <Button type="submit" className="w-full bg-agro-green hover:bg-agro-green-dark" disabled={uploading || submitting}>
+            {submitting ? `Adding ${type}...` : `Add ${type}`}
           </Button>
         </form>
       </CardContent>
@@ -886,6 +895,7 @@ const FarmerDashboard = () => {
                               <div>
                                 <p className="font-medium">{request.customer_profile?.full_name || "N/A"}</p>
                                 <p className="text-sm text-gray-500">{request.customer_profile?.email || "N/A"}</p>
+                                <p className="text-xs text-gray-400">Address: {request.customer_profile?.address || "N/A"}</p>
                               </div>
                             </TableCell>
                             <TableCell>

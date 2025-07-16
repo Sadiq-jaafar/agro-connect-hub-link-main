@@ -17,10 +17,6 @@ const Livestock = () => {
   const { toast } = useToast();
   const { addToCart, getTotalItems } = useCart();
 
-  useEffect(() => {
-    refreshProducts();
-  }, [refreshProducts]);
-
   const filteredProducts = livestockProducts.filter(
     product => 
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

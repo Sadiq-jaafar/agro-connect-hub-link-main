@@ -18,10 +18,12 @@ export interface PurchaseRequest {
   customer_profile?: {
     full_name: string | null;
     email: string;
+    address?: string | null;
   } | null;
   farmer_profile?: {
     full_name: string | null;
     email: string;
+    address?: string | null;
   } | null;
   products?: Array<{
     id: string;
@@ -64,14 +66,14 @@ export const usePurchaseRequests = () => {
           // Fetch customer profile
           const { data: customerProfile } = await supabase
             .from('profiles')
-            .select('full_name, email')
+            .select('full_name, email, address')
             .eq('user_id', request.customer_id)
             .single();
 
           // Fetch farmer profile
           const { data: farmerProfile } = await supabase
             .from('profiles')
-            .select('full_name, email')
+            .select('full_name, email, address')
             .eq('user_id', request.farmer_id)
             .single();
 
@@ -231,6 +233,7 @@ export const usePurchaseRequests = () => {
       });
     }
   };
+  //ll
 
   const deleteRequest = async (requestId: string) => {
     try {
