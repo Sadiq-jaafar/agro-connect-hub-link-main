@@ -66,7 +66,7 @@ const FarmerHeader = () => {
                 <DropdownMenuContent align="end" className={theme === 'dark' ? 'bg-gray-800 text-gray-100 border-gray-700' : ''}>
                   <DropdownMenuLabel>Farmer Account</DropdownMenuLabel>
                   <DropdownMenuSeparator className={theme === 'dark' ? 'bg-gray-700' : ''} />
-                  <DropdownMenuItem asChild>
+                  {/* <DropdownMenuItem asChild>
                     <Link to="/profile" className="cursor-pointer flex items-center">
                       <UserRound className="mr-2 h-4 w-4" />
                       <span>Profile</span>
@@ -77,7 +77,7 @@ const FarmerHeader = () => {
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Settings</span>
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                   <DropdownMenuSeparator className={theme === 'dark' ? 'bg-gray-700' : ''} />
                   <DropdownMenuItem 
                     onClick={handleLogout} 

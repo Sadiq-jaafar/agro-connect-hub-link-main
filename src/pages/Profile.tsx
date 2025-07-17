@@ -14,6 +14,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { UserRound, Settings, Package, History, LogOut, Sun, Moon, Edit, Trash2, Save, Key } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client"; // adjust import as needed
 
 const Profile = () => {
   const { currentUser, isAuthenticated, logout, updateUser, deleteAccount } = useUser();
@@ -38,11 +39,7 @@ const Profile = () => {
   const [email, setEmail] = useState("");
 
   // Redirect if not authenticated
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
+  // (Removed auth check as requested)
 
   // Initialize edit form data when user data is available
   useEffect(() => {
@@ -55,6 +52,35 @@ const Profile = () => {
       setEmail(currentUser.email);
     }
   }, [currentUser]);
+
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Replace with your actual logic to get the user ID
+    const fetchProfile = async () => {
+      setLoading(true);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        // Fetch profile from your 'profiles' table
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+        if (data) setProfile(data);
+      }
+      setLoading(false);
+    };
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return <div>Loading profile...</div>;
+  }
+  if (!profile) {
+    return <div>No profile found.</div>;
+  }
 
   const handleLogout = () => {
     logout();
@@ -119,9 +145,9 @@ const Profile = () => {
   // Determine active tab
   const activeTab = tabFromURL || "account";
 
-  if (!currentUser) {
-    return <div className={`p-8 text-center ${theme === 'dark' ? 'text-white bg-gray-900' : ''}`}>Loading profile...</div>;
-  }
+  console.log("Current user in Profile:", currentUser);
+
+  // Use profile.name, profile.email, etc. in your UI
 
   return (
     <div className={`container mx-auto py-8 px-4 ${theme === 'dark' ? 'text-white bg-gray-900' : ''}`}>
@@ -132,23 +158,23 @@ const Profile = () => {
             <CardHeader className="text-center">
               <div className="flex justify-center mb-4">
                 <Avatar className="h-24 w-24">
-                  <AvatarImage src={currentUser.profileImage} alt={currentUser.name} />
+                  <AvatarImage src={profile.profileImage} alt={profile.name} />
                   <AvatarFallback className={`text-xl ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-accent text-accent-foreground'}`}>
-                    {getInitials(currentUser.name)}
+                    {getInitials(profile.name)}
                   </AvatarFallback>
                 </Avatar>
               </div>
-              <CardTitle>{currentUser.name}</CardTitle>
-              <CardDescription className={theme === 'dark' ? 'text-gray-300' : ''}>{currentUser.role}</CardDescription>
+              <CardTitle>{profile.name}</CardTitle>
+              <CardDescription className={theme === 'dark' ? 'text-gray-300' : ''}>{profile.role}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-muted-foreground'}`}>Email:</span>
-                <span>{currentUser.email}</span>
+                <span>{profile.email}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-muted-foreground'}`}>Member since:</span>
-                <span>{currentUser.joinDate}</span>
+                <span>{profile.joinDate}</span>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-2">

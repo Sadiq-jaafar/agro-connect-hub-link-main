@@ -85,18 +85,13 @@ const Navbar = () => {
                 <DropdownMenuContent align="end" className={theme === 'dark' ? 'bg-gray-800 text-gray-100 border-gray-700' : ''}>
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator className={theme === 'dark' ? 'bg-gray-700' : ''} />
-                  <DropdownMenuItem asChild>
+                  {/* <DropdownMenuItem asChild>
                     <Link to="/profile" className="cursor-pointer flex items-center">
                       <UserRound className="mr-2 h-4 w-4" />
                       <span>Account</span>
                     </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile?tab=settings" className="cursor-pointer flex items-center">
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
-                    </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
+                 
                   <DropdownMenuSeparator className={theme === 'dark' ? 'bg-gray-700' : ''} />
                   <DropdownMenuItem 
                     onClick={handleLogout} 

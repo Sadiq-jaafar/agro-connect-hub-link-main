@@ -40,29 +40,29 @@ const FeaturedProducts = () => {
         ) : featured.length === 0 ? (
           <div className="text-center py-12 text-gray-500">No products found.</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featured.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group h-full flex flex-col">
-                <div className="h-52 overflow-hidden">
-                  <img 
+            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group h-full flex flex-col">
+              <div className="h-52 overflow-hidden">
+                <img 
                     src={product.image_url || "https://via.placeholder.com/400x300?text=No+Image"} 
-                    alt={product.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <CardContent className="pt-6 flex-grow">
-                  <p className="text-sm text-agro-green font-medium">{product.category}</p>
-                  <h3 className="font-semibold text-lg mt-1">{product.name}</h3>
+                  alt={product.name} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <CardContent className="pt-6 flex-grow">
+                <p className="text-sm text-agro-green font-medium">{product.category}</p>
+                <h3 className="font-semibold text-lg mt-1">{product.name}</h3>
                   <p className="text-agro-brown font-bold mt-2">₦{product.price.toLocaleString()}</p>
-                </CardContent>
-                <CardFooter className="pt-0 pb-6">
-                  <Button className="w-full bg-agro-green hover:bg-agro-green-dark" asChild>
+              </CardContent>
+              <CardFooter className="pt-0 pb-6">
+                <Button className="w-full bg-agro-green hover:bg-agro-green-dark" asChild>
                     <Link to={getProductLink(product)}>View Details</Link>
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
         )}
       </div>
     </section>

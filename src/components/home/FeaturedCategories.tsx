@@ -35,8 +35,8 @@ const FeaturedCategories = () => {
     <section className="py-16 bg-agro-cream/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-agro-green-dark mb-4">Explore Our Categories</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-green-400 mb-4">Explore Our Categories</h2>
+          <p className="text-gray-100 max-w-2xl mx-auto">
             Discover high-quality agricultural products and services to meet all your farming needs
           </p>
         </div>

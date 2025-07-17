@@ -16,7 +16,7 @@ const CallToAction = () => {
             className="bg-white text-agro-brown hover:bg-agro-cream"
             asChild
           >
-            <Link to="/signup">Sign Up Now</Link>
+            <Link to="/auth">Sign Up Now</Link>
           </Button>
           <Button 
             size="lg" 
